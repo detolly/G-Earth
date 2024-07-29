@@ -166,8 +166,28 @@ public class RC4Base64 implements RC4Cipher {
     }
 
     public boolean moveDown() {
-        byte tmp;
 
+        if ((q & 0x3F) == 0x3F) {
+
+            int x = (0x129 * (q + 0x43)) & 0xFF;
+            int y = (j + state[x]) & 0xff;
+
+            byte tmp = state[x];
+            state[x] = state[y];
+            state[y] = tmp;
+        }
+
+        byte tmp = state[q];
+        state[q] = state[j];
+        state[j] = tmp;
+
+        j = (j - (state[q] & 0xff)) & 0xff;
+        q = (q - 1) & 0xff;
+
+        return true;
+
+/*
+        byte tmp;
         if ((q & 0x3F) == 0x3F) {
             // Unsupported.
             return false;
@@ -181,6 +201,7 @@ public class RC4Base64 implements RC4Cipher {
         q = (q - 1) & 0xff;
 
         return true;
+*/
     }
 
     public boolean undoRc4(int length) {
