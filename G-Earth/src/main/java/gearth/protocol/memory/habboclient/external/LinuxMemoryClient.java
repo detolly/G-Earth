@@ -57,7 +57,7 @@ public class LinuxMemoryClient implements HabboClient {
         String getpid_path = filePath + "/getpid";
         filePath += "/getmem";
 
-        ProcessBuilder pid_builder = new ProcessBuilder(getpid_path, "Habbo");
+        ProcessBuilder pid_builder = new ProcessBuilder(getpid_path, "Habbo.exe", "HabboHotel-");
         Process pid_process = pid_builder.start();
 
         try {
